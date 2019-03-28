@@ -8,8 +8,6 @@ import (
 	"strings"
 	"testing"
 	"time"
-
-	"cloud.google.com/go/civil"
 )
 
 func TestSessionInitSQL(t *testing.T) {
@@ -84,9 +82,9 @@ select
 		sql.Named("nvcm", NVarCharMax(strings.Repeat("x", 5000))),
 		sql.Named("vcm", VarCharMax(strings.Repeat("x", 5000))),
 		sql.Named("dt1", DateTime1(tin)),
-		sql.Named("dt2", civil.DateTimeOf(tin)),
-		sql.Named("d", civil.DateOf(tin)),
-		sql.Named("tm", civil.TimeOf(tin)),
+		sql.Named("dt2", DateTimeOf(tin)),
+		sql.Named("d", DateOf(tin)),
+		sql.Named("tm", TimeOf(tin)),
 		sql.Named("dto", DateTimeOffset(tin)),
 	)
 	err = row.Scan(&nv, &v, &nvcm, &vcm, &dt1, &dt2, &d, &tm, &dto)
@@ -154,9 +152,9 @@ select
 		sql.Named("v", sin),
 		sql.Named("tgo", tin),
 		sql.Named("dt1", DateTime1(tin)),
-		sql.Named("dt2", civil.DateTimeOf(tin)),
-		sql.Named("d", civil.DateOf(tin)),
-		sql.Named("tm", civil.TimeOf(tin)),
+		sql.Named("dt2", DateTimeOf(tin)),
+		sql.Named("d", DateOf(tin)),
+		sql.Named("tm", TimeOf(tin)),
 		sql.Named("dto", DateTimeOffset(tin)),
 	).Scan(&nv, &v, &tgo, &dt1, &dt2, &d, &tm, &dto)
 	if err != nil {

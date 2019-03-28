@@ -9,9 +9,7 @@ import (
 	"fmt"
 	"reflect"
 	"time"
-
 	// "github.com/cockroachdb/apd"
-	"cloud.google.com/go/civil"
 )
 
 // Type alias provided for compatibility.
@@ -50,11 +48,11 @@ func convertInputParameter(val interface{}) (interface{}, error) {
 		return val, nil
 	case DateTimeOffset:
 		return val, nil
-	case civil.Date:
+	case Date:
 		return val, nil
-	case civil.DateTime:
+	case DateTime:
 		return val, nil
-	case civil.Time:
+	case Time:
 		return val, nil
 		// case *apd.Decimal:
 		// 	return nil
@@ -145,16 +143,16 @@ func (s *Stmt) makeParamExtra(val driver.Value) (res param, err error) {
 		res.ti.Scale = 7
 		res.buffer = encodeDateTimeOffset(time.Time(val), int(res.ti.Scale))
 		res.ti.Size = len(res.buffer)
-	case civil.Date:
+	case Date:
 		res.ti.TypeId = typeDateN
 		res.buffer = encodeDate(val.In(time.UTC))
 		res.ti.Size = len(res.buffer)
-	case civil.DateTime:
+	case DateTime:
 		res.ti.TypeId = typeDateTime2N
 		res.ti.Scale = 7
 		res.buffer = encodeDateTime2(val.In(time.UTC), int(res.ti.Scale))
 		res.ti.Size = len(res.buffer)
-	case civil.Time:
+	case Time:
 		res.ti.TypeId = typeTimeN
 		res.ti.Scale = 7
 		res.buffer = encodeTime(val.Hour, val.Minute, val.Second, val.Nanosecond, int(res.ti.Scale))
